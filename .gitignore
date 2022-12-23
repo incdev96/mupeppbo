@@ -3,3 +3,4 @@ message/__pycache__
 message/migrations/__pycache__
 mupeppbo_project/__pycache__/
 .python-version
+mupeppbo_project/.env
