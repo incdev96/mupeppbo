@@ -41,13 +41,13 @@ https://templatemo.com/tm-576-snapx-photography
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="index.html" class="logo">
+                    <a href="{% url 'message:index' %}" class="logo">
                         <img src="{% static 'message/assets/images/logo.png' %}" alt="SnapX Photography Template">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="{% url 'message:index' %}" class="active">Home</a></li>
                         <li class="has-sub">
                             <a href="javascript:void(0)">Photos &amp; Videos</a>
                             <ul class="sub-menu">
@@ -251,7 +251,7 @@ https://templatemo.com/tm-576-snapx-photography
             <div class="item">
               <div class="thumb">
                 <img src="{% static 'message/assets/images/featured-02.jpg' %}" alt="">
-                <div class="hover-effect">
+                <div class="hover-effect">ndex/
                   <div class="content">
                     <h4>Run In The Nature <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <span>(4.5)</span></h4>
                     <ul>
