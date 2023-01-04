@@ -3,12 +3,10 @@ from .models import Mutualist, Sms
 import requests
 import environ
 from django.conf import settings
-from .tasks import print_token, generate_token
+from .tasks import generate_token
 
 env = environ.Env()
 environ.Env.read_env(env_file=str(settings.BASE_DIR/"mupeppbo_project"/".env"))
-
-token = generate_token()
 
 @admin.register(Mutualist)
 class MutualistAdmin(admin.ModelAdmin):
@@ -23,6 +21,7 @@ class SmsAdmin(admin.ModelAdmin):
 
     @admin.action(description="Envoyer sms")
     def send_sms(self, request, queryset):
+        token = generate_token()
         m = []
         for q in queryset:
             m += q.mutualist.all()
@@ -53,4 +52,5 @@ class SmsAdmin(admin.ModelAdmin):
 
     @admin.action(description="Afficher le token")
     def print_token(self, request, queryset):
+        token = generate_token()
         print(token)
