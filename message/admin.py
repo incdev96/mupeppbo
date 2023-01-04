@@ -3,11 +3,12 @@ from .models import Mutualist, Sms
 import requests
 import environ
 from django.conf import settings
+from .tasks import print_token, generate_token
 
 env = environ.Env()
 environ.Env.read_env(env_file=str(settings.BASE_DIR/"mupeppbo_project"/".env"))
 
-# Register your models here.
+token = generate_token()
 
 @admin.register(Mutualist)
 class MutualistAdmin(admin.ModelAdmin):
@@ -18,7 +19,7 @@ class MutualistAdmin(admin.ModelAdmin):
 class SmsAdmin(admin.ModelAdmin):
     list_display = ['body']
 
-    actions = ['send_sms']
+    actions = ['send_sms', 'print_token']
 
     @admin.action(description="Envoyer sms")
     def send_sms(self, request, queryset):
@@ -29,8 +30,9 @@ class SmsAdmin(admin.ModelAdmin):
         body = ' '.join([qs.body for qs in queryset])
 
         url = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B2250504522224/requests"
+
         headers = {
-            "Authorization": env('SEND_TOKEN'),
+            "Authorization": f"{token}",
             "Content-Type": "application/json"
         }
 
@@ -48,3 +50,7 @@ class SmsAdmin(admin.ModelAdmin):
 
             json_response = response.json()
             print(json_response)
+
+    @admin.action(description="Afficher le token")
+    def print_token(self, request, queryset):
+        print(token)
