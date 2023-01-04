@@ -28,4 +28,6 @@ def generate_token():
 
     response = requests.post(url, data=body, headers=headers)
     json_response = response.json()
-    return json_response
+    token = json_response["access_token"]
+    print(token)
+    return token
