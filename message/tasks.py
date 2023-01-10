@@ -28,6 +28,6 @@ def generate_token():
     return token
 
 
-@shared_task
+@shared_task()
 def test_tasks():
     print("Hello world")
