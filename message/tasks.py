@@ -26,3 +26,8 @@ def generate_token():
     token = json_response["access_token"]
     print(token)
     return token
+
+
+@shared_task
+def test_tasks():
+    print("Hello world")
