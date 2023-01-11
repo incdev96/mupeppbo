@@ -20,6 +20,7 @@ class Sms(models.Model):
 
 
     class Meta:
+        
         verbose_name = 'Sms à envoyer'
         verbose_name_plural = 'Sms à envoyer'
 
@@ -30,6 +31,7 @@ class Balance(models.Model):
     expire_date = models.DateTimeField("Expire le ")
 
     class Meta:
+
         verbose_name = "Balance"
         verbose_name_plural = "Balance"
 
