@@ -24,10 +24,24 @@ def generate_token():
     response = requests.post(url, data=body, headers=headers)
     json_response = response.json()
     token = json_response["access_token"]
-    print(token)
     return token
 
 
 @shared_task()
 def test_tasks():
     print("Hello world")
+
+
+@shared_task()
+def get_sms():
+    url = "https://api.orange.com/sms/admin/v1/contracts"
+    token = generate_token()
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    sms = requests.get(url, headers=headers).json()
+    data = {
+        "quantity" : sms[0]["availableUnits"],
+        "expire": sms[0]["expirationDate"]
+    }
+    return data

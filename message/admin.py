@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Mutualist, Sms
+from .models import Mutualist, Sms, Balance
 import requests
 import environ
 from django.conf import settings
-from .tasks import generate_token
+from .tasks import generate_token, get_sms
 
 env = environ.Env()
 environ.Env.read_env(env_file=str(settings.BASE_DIR/"mupeppbo_project"/".env"))
@@ -50,7 +50,7 @@ class SmsAdmin(admin.ModelAdmin):
             json_response = response.json()
             print(json_response)
 
-    @admin.action(description="Afficher le token")
-    def print_token(self, request, queryset):
-        token = generate_token()
-        print(token)
+
+@admin.register(Balance)
+class BalanceAdmin(admin.ModelAdmin):
+    list_display = ['available_units', 'expire_date']
