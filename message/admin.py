@@ -40,7 +40,6 @@ class SmsAdmin(admin.ModelAdmin):
             "outboundSMSMessageRequest": {
 		            "address": f"tel:+225{nb}",
 		            "senderAddress":"tel:+2250504522224",
-                    "senderName": "MUPEPPBO",
 		            "outboundSMSTextMessage": {
                         "message": f"{body}"
                     }
