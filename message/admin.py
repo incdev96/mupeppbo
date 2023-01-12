@@ -31,7 +31,7 @@ class SmsAdmin(admin.ModelAdmin):
         url = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B2250504522224/requests"
 
         headers = {
-            "Authorization": f"{token}",
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/json"
         }
 
@@ -40,6 +40,7 @@ class SmsAdmin(admin.ModelAdmin):
             "outboundSMSMessageRequest": {
 		            "address": f"tel:+225{nb}",
 		            "senderAddress":"tel:+2250504522224",
+                    "senderName": "MUPEPPBO",
 		            "outboundSMSTextMessage": {
                         "message": f"{body}"
                     }
