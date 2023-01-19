@@ -74,4 +74,4 @@ class SmsAdmin(admin.ModelAdmin):
                         }
                     }
                 }
-                response = requests.post(url, json=payload, headers=headers)
+                response = requests.post(url, data=payload, headers=headers)
