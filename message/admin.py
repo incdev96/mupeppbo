@@ -51,7 +51,7 @@ class SmsAdmin(admin.ModelAdmin):
 
         #     json_response = response.json()
         #     print(json_response)
-        token = generate_token
+        token = generate_token()
         for qs in queryset:
             body = qs.body
             phone_number = [m.phone_number for m in qs.mutualist.all()]
