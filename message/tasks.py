@@ -43,20 +43,20 @@ def send_message_task(body, phone_numbers):
 
 
     for phone_number in phone_numbers:
-            payload = { 
+        payload = {
             "outboundSMSMessageRequest": {
-		            "address": f"tel:+225{phone_number}",
-		            "senderAddress":"tel:+2250504522224",
-                    "senderName": "MUPEPPBO",
-		            "outboundSMSTextMessage": {
-                        "message": f"{body}"
-                    }
-	            }
-            }
-            response = requests.post(url, json=payload, headers=headers)
+                "address": f"tel:+225{phone_number}",
+		        "senderAddress":"tel:+2250504522224",
+                "senderName": "MUPEPPBO",
+		        "outboundSMSTextMessage": {
+                    "message": f"{body}"
+                }
+	        }
+        }
+        response = requests.post(url, json=payload, headers=headers)
 
-            json_response = response.json()
-            print(json_response)
+        json_response = response.json()
+        print(json_response)
 
 
 @shared_task()
