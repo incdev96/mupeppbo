@@ -3,7 +3,7 @@ from .models import Mutualist, Sms
 import requests
 import environ
 from django.conf import settings
-from .tasks import send_message
+from .tasks import send_message_task
 
 env = environ.Env()
 environ.Env.read_env(env_file=str(settings.BASE_DIR/"mupeppbo_project"/".env"))
@@ -29,4 +29,4 @@ class SmsAdmin(admin.ModelAdmin):
         phone_numbers = [member.phone_number for member in members]
         body = ' '.join([qs.body for qs in queryset])
 
-        send_message.delay(body, phone_numbers)
+        send_message_task.delay(body, phone_numbers)
