@@ -29,4 +29,4 @@ class SmsAdmin(admin.ModelAdmin):
         phone_numbers = [member.phone_number for member in members]
         body = ' '.join([qs.body for qs in queryset])
 
-        send_message(body, phone_numbers)
+        send_message.delay(body, phone_numbers)
