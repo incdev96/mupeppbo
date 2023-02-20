@@ -3,7 +3,7 @@ from .models import Mutualist, Sms
 import requests
 import environ
 from django.conf import settings
-from .tasks import generate_token
+from .tasks import send_message
 
 env = environ.Env()
 environ.Env.read_env(env_file=str(settings.BASE_DIR/"mupeppbo_project"/".env"))
@@ -22,32 +22,11 @@ class SmsAdmin(admin.ModelAdmin):
 
     @admin.action(description="Envoyer sms")
     def send_sms(self, request, queryset):
-        token = generate_token()
-        m = []
-        for q in queryset:
-            m += q.mutualist.all()
-        m_list = [m.phone_number for m in m]
+        """This function send an sms to each member. """
+        members = [] 
+        for qs in queryset:
+            members += qs.mutualist.all()
+        phone_numbers = [member.phone_number for member in members]
         body = ' '.join([qs.body for qs in queryset])
 
-        url = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B2250504522224/requests"
-
-        headers = {
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/json"
-        }
-
-        for nb in m_list:
-            payload = { 
-            "outboundSMSMessageRequest": {
-		            "address": f"tel:+225{nb}",
-		            "senderAddress":"tel:+2250504522224",
-                    "senderName": "MUPEPPBO",
-		            "outboundSMSTextMessage": {
-                        "message": f"{body}"
-                    }
-	            }
-            }
-            response = requests.post(url, json=payload, headers=headers)
-
-            json_response = response.json()
-            print(json_response)
+        send_message(body, phone_numbers)

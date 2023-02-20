@@ -28,8 +28,35 @@ def generate_token():
 
 
 @shared_task()
-def test_tasks():
-    print("Hello world")
+def send_message_task(body, phone_numbers):
+    """Task for send message in background"""
+
+    token = generate_token()
+
+    url = "https://api.orange.com/smsmessaging/v1/outbound/tel%3A%2B2250504522224/requests"
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    
+
+
+    for phone_number in phone_numbers:
+            payload = { 
+            "outboundSMSMessageRequest": {
+		            "address": f"tel:+225{phone_number}",
+		            "senderAddress":"tel:+2250504522224",
+                    "senderName": "MUPEPPBO",
+		            "outboundSMSTextMessage": {
+                        "message": f"{body}"
+                    }
+	            }
+            }
+            response = requests.post(url, json=payload, headers=headers)
+
+            json_response = response.json()
+            print(json_response)
 
 
 @shared_task()
